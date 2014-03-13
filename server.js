@@ -8,4 +8,5 @@ var server = http.createServer(function(req, res){
 });
 
 var port = Number(process.env.PORT || 5000);
-server.listen(3000, 'localhost');
+console.log('Listening on port',port);
+server.listen(port);
