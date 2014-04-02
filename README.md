@@ -1,9 +1,13 @@
 Example Node Server
 =============
 
+Setup:
+  * Install nodemon:
+  * `npm install -g nodemon`
+
 To run this server:
 
-  * `node server.js`
+  * `nodemon server.js`
   * Visit http://localhost:5000/
 
 To view the server in action:
