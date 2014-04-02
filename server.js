@@ -1,10 +1,21 @@
 var http  = require('http');
 var fs    = require('fs');
+var url   = require('url');
 
 console.log('Starting server');
 
 var server = http.createServer(function(req, res){
-	fs.readFile(__dirname + '/indexx.html', function(err, data){
+	var pathname = url.parse(req.url).pathname;
+	console.log('pathname:',pathname);
+
+	if (pathname === '/') {
+		pathname = '/index.html';
+	}
+
+  var filepath = __dirname + '/public' + pathname;
+  console.log('Filepath: ', filepath);
+
+	fs.readFile(filepath, function(err, data){
 		if (err) {
 			res.writeHead(500, {'Content-Type': 'text/html'});
 			res.write('Caught Error: ' + err);
