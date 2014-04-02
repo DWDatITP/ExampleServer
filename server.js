@@ -1,10 +1,20 @@
-var http = require('http');
+var http  = require('http');
+var fs    = require('fs');
 
 console.log('Starting server');
 
 var server = http.createServer(function(req, res){
-	res.writeHead(200, {'Content-Type': 'text/html'});
-	res.end('<h1>Hello World</h1>');
+	fs.readFile(__dirname + '/indexx.html', function(err, data){
+		if (err) {
+			res.writeHead(500, {'Content-Type': 'text/html'});
+			res.write('Caught Error: ' + err);
+			res.end();
+		} else {
+			res.writeHead(200, {'Content-Type': 'text/html'});
+			res.write(data);
+			res.end();
+		}
+	});
 });
 
 var port = Number(process.env.PORT || 5000);
