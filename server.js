@@ -1,30 +1,41 @@
 var http  = require('http');
 var fs    = require('fs');
-var url   = require('url');
 
 console.log('Starting server');
 
+function getFilepath(url){
+  var filepath = require('url').parse(url).pathname;
+  if (filepath === '/') {
+    filepath = '/index.html';
+  }
+
+  filepath = __dirname + '/public' + filepath;
+
+  console.log('Getting filepath from url: ' + url + '. Filepath: ' + filepath);
+  return filepath;
+}
+
+function handleError(err, res){
+  res.writeHead(500, {'Content-Type': 'text/html'});
+  res.write('Handled Error: ' + err);
+  res.end();
+}
+
 var server = http.createServer(function(req, res){
-	var pathname = url.parse(req.url).pathname;
-	console.log('pathname:',pathname);
+  var filepath = getFilepath(req.url);
 
-	if (pathname === '/') {
-		pathname = '/index.html';
-	}
-
-  var filepath = __dirname + '/public' + pathname;
-  console.log('Filepath: ', filepath);
-
-	fs.readFile(filepath, function(err, data){
-		if (err) {
-			res.writeHead(500, {'Content-Type': 'text/html'});
-			res.write('Caught Error: ' + err);
-			res.end();
-		} else {
-			res.writeHead(200, {'Content-Type': 'text/html'});
-			res.write(data);
-			res.end();
-		}
+  // read 
+  fs.readFile(filepath, function(err, data){
+  	if (err) {
+      console.log('Failed to read file at path:' + filepath);
+      handleError(err, res);
+  	} else {
+  		res.writeHead(200, {'Content-Type': 'text/html'});
+      
+      // Write the data that we read from the file
+  		res.write(data);
+  		res.end();
+  	}
 	});
 });
 
