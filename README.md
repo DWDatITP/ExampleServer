@@ -63,7 +63,7 @@ After you add this, visit [http://localhost:5000](http://localhost:5000) in your
 
 You should see our familiar friend, "Hello World". (The full code so far is available [at github](https://gist.github.com/bantic/10216848)).
 
-### Configure express to server static files
+### Configure express to serve static files
 
 Express has a built-in helper to serve up your static files (like your css and javascript) called `express.static()`. To configure your app to serve up the static files that are in your, add this line:
 
