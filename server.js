@@ -1,9 +1,14 @@
 var express = require('express');
+var expressHandlebars = require('express3-handlebars');
 
 var app = express();
+var handlebars = expressHandlebars.create({defaultLayout: 'main'});
+
+app.engine('handlebars', handlebars.engine);
+app.set('view engine', 'handlebars');
 
 app.get('/', function(req, res){
-  res.send('Hello, World');
+  res.render('index', {luckyNumber: Math.round( Math.random() * 10 )})
 });
 
 app.use('/public', express.static('public'));
