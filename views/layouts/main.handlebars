@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>DWD Server</title>
+
+		<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="/public/css/app.css">
+
+		<script src='/public/js/jquery.js'></script>
+		<script src='/public/js/bootstrap.js'></script>
+
+	</head>
+	<body>
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">Home</a>
+				</div>
+				<div class="collapse navbar-collapse">
+				    <ul class="nav navbar-nav">
+				        <li><a href="/weeks">Weeks</a></li>
+				        <li><a href="/students">Students</a></li>
+			        </ul>
+		        </div>
+			</div>
+		</nav>
+
+	   	<div class='container'>
+       		{{{ body }}}
+       	</div>
+
+       	<div id='footer'>
+       		<div class='container'>
+	       		<p class='text-muted'>Copyright 2014 SomeMegaCorp</p>
+       		</div>
+       	</div>
+	</body>
+</html>

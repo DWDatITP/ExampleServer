@@ -1,0 +1,9 @@
+<h1>Class Attendance</h1>
+<p>This page lists all the weeks of the class</p>
+
+<p>Weeks:</p>
+<ol>
+	{{#each weekNumbers}}
+		<li><a href='/weeks/{{this}}'>Week {{this}} (weeks/{{this}})</a></li>
+	{{/each}}
+</ol>
