@@ -1,5 +1,8 @@
 <h1>DWD Server Sample Project</h1>
 
+{{#if user}}
+Welcome, {{user}}
+{{/if}}
 
 <div class='row'>
 	<div class='col-md-8'>
@@ -9,10 +12,11 @@
 		<ul>
 			<li><a href='/weeks'>List of class weeks</a></li>
 			<li><a href='weeks/1'>List of attendees for a given week</a></li>
-		<li><a href='/students'>List of all students with their week-by-week attendance</a></li>
+      <li><a href='/students'>List of all students with their week-by-week attendance</a></li>
 		</ul>
+
 	</div>
 	<div class='col-md-4'>
-		<img src='/public/images/teacher.gif' />
+		<img src='/public/images/teacher.gif' alt='teacher gif' />
 	</div>
 </div>
