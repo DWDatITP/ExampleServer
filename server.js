@@ -1,6 +1,8 @@
 var express = require('express');
 var expressHandlebars = require('express3-handlebars');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var expressSession = require('express-session');
 
 var app = express();
 
@@ -9,6 +11,12 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 app.use(bodyParser());
+app.use(cookieParser());
+app.use(expressSession({secret:'somesecretword'}));
+
+var checkLogin = require('./middleware/check_login');
+
+app.use(checkLogin);
 
 app.get('/', function(req, res){
   res.render('index');
@@ -37,6 +45,13 @@ app.get('/weeks/:weekNumber', function(req, res){
 var formRoutes = require('./routes/form');
 app.get('/form', formRoutes.get);
 app.post('/form', formRoutes.post);
+
+var loginRoutes = require('./routes/login');
+app.get('/login', loginRoutes.get);
+app.post('/login', loginRoutes.post);
+
+var logoutRoutes = require('./routes/logout');
+app.get('/logout', logoutRoutes.get);
 
 app.use('/public', express.static('public'));
 
