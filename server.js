@@ -15,6 +15,7 @@ app.use(cookieParser());
 app.use(expressSession({secret:'somesecretword'}));
 
 var checkLogin = require('./middleware/check_login');
+var requireLogin = require('./middleware/require_login');
 
 app.use(checkLogin);
 
@@ -22,29 +23,14 @@ app.get('/', function(req, res){
   res.render('index');
 });
 
-app.get('/students', function(req, res){
-  var studentData = require('./data/students');
-  res.render('students', {
-    students: studentData
-  });
-});
+var studentRoutes = require('./routes/students');
+app.get('/students', studentRoutes.get);
 
-app.get('/weeks', function(req, res){
-  var weeksData = require('./data/weeks');
+var weeksRoutes = require('./routes/weeks');
+app.get('/weeks', weeksRoutes.get);
 
-  res.render('weeks', {
-    weeks: weeksData
-  });
-});
-
-app.get('/weeks/:weekNumber', function(req, res){
-  var weekNumber = req.params.weekNumber;
-  res.render('week', {weekNumber: weekNumber});
-});
-
-var formRoutes = require('./routes/form');
-app.get('/form', formRoutes.get);
-app.post('/form', formRoutes.post);
+app.get('/weeks/:weekNumber', weeksRoutes.weekNumber);
+app.post('/attendance/:weekNumber', requireLogin, weeksRoutes.attendance);
 
 var loginRoutes = require('./routes/login');
 app.get('/login', loginRoutes.get);

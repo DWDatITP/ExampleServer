@@ -3,21 +3,16 @@
 
 <p>Students:</p>
 <ul>
-  <li>Student 1: Present</li>
-  <li>Student 2: Not Present</li>
-  <li>Student 3: Not Present</li>
-  <li>(Will list all students)...</li>
+  {{#each students}}
+  <li>{{this.name}}: {{attendanceForWeek this ../weekNumber}}</li>
+  {{/each}}
 </ul>
 
-<form action="">
-  <p>Present? Select your name and click submit.</p>
-  <p>(Students can use this form to mark themselves as being in class.)</p>
-
-  <select>
-    <option>Select your name...</option>
-    <option>Student 2</option>
-    <option>Student 3</option>
-  </select>
-
-  <button type='submit'>Submit</button>
-</form>
+{{#if currentUser}}
+  <form action='/attendance/{{weekNumber}}' method='post'>
+    <p>Click the button below to mark your attendance:</p>
+    <button type='submit'>I am here</button>
+  </form>
+{{else}}
+<p><a href='/login'>Log</a> in to mark yourself as here.</p>
+{{/if}}

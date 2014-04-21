@@ -23,7 +23,7 @@
           </ul>
           <div class='nav navbar-text navbar-right'>
             {{#if currentUser}}
-              Logged in as <b>{{currentUser}}</b>.
+              Logged in as <b>{{currentUser.name}}</b>.
               <a href='/logout' class='navbar-link'>Logout</a>
             {{else}}
               <a href='/login' class='navbar-link'>Login</a>
