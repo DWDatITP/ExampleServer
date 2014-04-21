@@ -10,6 +10,12 @@
       <li><a href='/students'>List of all students with their week-by-week attendance</a></li>
 		</ul>
 
+    {{#if currentWeek}}
+      <p>The current week is:
+        <a href='/weeks/{{currentWeek.number}}'>Week #{{currentWeek.number}}</a>
+      </p>
+    {{/if}}
+
 	</div>
 	<div class='col-md-4'>
 		<img src='/public/images/teacher.gif' alt='teacher gif' />

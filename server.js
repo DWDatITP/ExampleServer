@@ -19,8 +19,11 @@ var requireLogin = require('./middleware/require_login');
 
 app.use(checkLogin);
 
+var weekData = require('./data/weeks');
 app.get('/', function(req, res){
-  res.render('index');
+  res.render('index', {
+    currentWeek: weekData.currentWeek()
+  });
 });
 
 var studentRoutes = require('./routes/students');
