@@ -3,7 +3,11 @@
 
 <p>Weeks:</p>
 <ol>
-	{{#each weekNumbers}}
-		<li><a href='/weeks/{{this}}'>Week {{this}} (weeks/{{this}})</a></li>
+	{{#each weeks}}
+    <li>
+      <a href='/weeks/{{this.number}}'>
+        Week {{this.number}} ({{formatDate this.date}})
+      </a>
+    </li>
 	{{/each}}
 </ol>

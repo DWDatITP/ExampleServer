@@ -1,6 +1,5 @@
 <h1>DWD Server Sample Project</h1>
 
-
 <div class='row'>
 	<div class='col-md-8'>
 		<p>This node server will be used to take attendance in class.</p>
@@ -8,11 +7,17 @@
 		<p>Pages:</p>
 		<ul>
 			<li><a href='/weeks'>List of class weeks</a></li>
-			<li><a href='weeks/1'>List of attendees for a given week</a></li>
-		<li><a href='/students'>List of all students with their week-by-week attendance</a></li>
+      <li><a href='/students'>List of all students with their week-by-week attendance</a></li>
 		</ul>
+
+    {{#if currentWeek}}
+      <p>The current week is:
+        <a href='/weeks/{{currentWeek.number}}'>Week #{{currentWeek.number}}</a>
+      </p>
+    {{/if}}
+
 	</div>
 	<div class='col-md-4'>
-		<img src='/public/images/teacher.gif' />
+		<img src='/public/images/teacher.gif' alt='teacher gif' />
 	</div>
 </div>
