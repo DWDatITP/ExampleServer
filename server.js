@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
 var MongoStore = require('connect-mongo')(expressSession);
 var mongo = require('./mongo');
-var mongoUrl = 'mongodb://dwdweek5:dwdweek5@ds053448.mongolab.com:53448/dwd-week5';
+var mongoUrl = process.env.MONGO_URL || 'mongodb://dwdweek5:dwdweek5@ds053448.mongolab.com:53448/dwd-week5';
 
 var app = express();
 
