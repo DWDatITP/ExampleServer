@@ -1,3 +1,9 @@
+var mongo = require('../mongo');
+
+/*
+
+// The student data is in Mongo, but it looks like this:
+
 var studentData = [
   {id: 1, name: "Bing  Huang", username:'bing', attendance: ['Y', 'Y', 'Y', 'N', 'N', 'N', 'N']},
   {id: 2, name: "Brian  Clifton", username:'brian',attendance: ['Y', 'Y', 'Y', 'N', 'N', 'N', 'N']},
@@ -11,35 +17,38 @@ var studentData = [
   {id: 10, name: "Xinyi  Deng", username: 'xinyi', attendance: ['Y', 'Y', 'Y', 'N', 'N', 'N', 'N']},
   {id: 11, name: "Zhuoying  Li", username: 'zhuoying', attendance: ['Y', 'Y', 'Y', 'N', 'N', 'N', 'N']}
 ];
+*/
 
 module.exports = {
   findById: function(id, callback){
     id = parseInt(id, 10); // make sure it is an integer
-    var foundStudentDatum = false;
 
-    studentData.forEach(function(studentDatum){
-      if (studentDatum.id === id) {
-        foundStudentDatum = studentDatum;
-      }
+    var coll = mongo.getCollection('students');
+
+    coll.findOne({id:id}, function(err, student){
+      if (err) { throw new Error('Error finding student by id '+err); }
+
+      callback(student);
     });
-
-    return callback(foundStudentDatum);
   },
 
   findByUsername: function(username, callback){
-    var foundStudentDatum = false;
+    var coll = mongo.getCollection('students');
 
-    studentData.forEach(function(studentDatum){
-      if (studentDatum.username === username) {
-        foundStudentDatum = studentDatum;
-      }
+    coll.findOne({username:username}, function(err, student){
+      if (err) { throw new Error('Error finding student by username '+err); }
+
+      callback(student);
     });
-
-    return callback(foundStudentDatum);
   },
 
   allStudents: function(callback){
-    return callback(studentData);
+    var coll = mongo.getCollection('students');
+    coll.find({}).toArray(function(err, students){
+      if (err) { throw new Error('Error finding allStudents '+err); }
+
+      callback(students);
+    });
   },
 
   // synchronous. Just reads data off the student. No callback.
@@ -51,9 +60,14 @@ module.exports = {
 
   markAttendance: function(student, weekNumber, callback){
     var weekNumberIndex = weekNumber - 1; // arrays start at 0, not 1
-
     student.attendance[weekNumberIndex] = 'Y';
 
-    callback();
+    var coll = mongo.getCollection('students');
+
+    coll.update({id:student.id}, student, {upsert:true}, function(err, count){
+      if (err) { throw new Error('Error updating student'+err);}
+
+      callback(count);
+    }); 
   }
 };
