@@ -9,15 +9,16 @@ var weekData = [
 ];
 
 module.exports = {
-  allWeeks: function(){
-    return weekData;
+  allWeeks: function(callback){
+    return callback(weekData);
   },
 
-  findByNumber: function(number){
-    return weekData[number-1];
+  findByNumber: function(number, callback){
+    callback(weekData[number-1]);
   },
 
-  currentWeek: function(){
+  currentWeek: function(callback){
+    console.log('currentWeek');
     var i;
     var week;
     var now = new Date();
@@ -26,8 +27,11 @@ module.exports = {
     for (i = weekData.length - 1; i >= 0; i--) {
       week = weekData[i];
       if (week.date < now) {
-        return week;
+        callback(week);
+        return;
       }
     }
+
+    callback();
   }
 };

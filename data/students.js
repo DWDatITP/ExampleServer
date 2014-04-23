@@ -13,7 +13,7 @@ var studentData = [
 ];
 
 module.exports = {
-  findById: function(id){
+  findById: function(id, callback){
     id = parseInt(id, 10); // make sure it is an integer
     var foundStudentDatum = false;
 
@@ -23,10 +23,10 @@ module.exports = {
       }
     });
 
-    return foundStudentDatum;
+    return callback(foundStudentDatum);
   },
 
-  findByUsername: function(username){
+  findByUsername: function(username, callback){
     var foundStudentDatum = false;
 
     studentData.forEach(function(studentDatum){
@@ -35,22 +35,25 @@ module.exports = {
       }
     });
 
-    return foundStudentDatum;
+    return callback(foundStudentDatum);
   },
 
-  allStudents: function(){
-    return studentData;
+  allStudents: function(callback){
+    return callback(studentData);
   },
 
+  // synchronous. Just reads data off the student. No callback.
   studentAttendanceForWeek: function(student, weekNumber){
     var weekNumberIndex = weekNumber - 1; // arrays start at 0, not 1
 
     return student.attendance[weekNumberIndex];
   },
 
-  markAttendance: function(student, weekNumber){
+  markAttendance: function(student, weekNumber, callback){
     var weekNumberIndex = weekNumber - 1; // arrays start at 0, not 1
 
     student.attendance[weekNumberIndex] = 'Y';
+
+    callback();
   }
 };

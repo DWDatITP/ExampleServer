@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
 var MongoStore = require('connect-mongo')(expressSession);
 var mongo = require('./mongo');
-var mongoUrl = process.env.MONGO_URL || 'mongodb://dwdweek5:dwdweek5@ds053448.mongolab.com:53448/dwd-week5';
+var mongoUrl = 'mongodb://dwdweek5:dwdweek5@ds053448.mongolab.com:53448/dwd-week5';
 
 var app = express();
 
@@ -28,8 +28,10 @@ app.use(checkLogin);
 
 var weekData = require('./data/weeks');
 app.get('/', function(req, res){
-  res.render('index', {
-    currentWeek: weekData.currentWeek()
+  weekData.currentWeek( function(currentWeek){
+    res.render('index', {
+      currentWeek: currentWeek
+    })
   });
 });
 

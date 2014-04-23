@@ -4,29 +4,34 @@ var moment = require('moment');
 
 module.exports = {
   get: function(req, res){
-    res.render('weeks', { weeks: weeksData.allWeeks() });
+    weeksData.allWeeks(function(weeks){
+      res.render('weeks', {weeks: weeks});
+    });
   },
 
   weekNumber: function(req, res){
     var weekNumber = req.params.weekNumber;
     weekNumber = parseInt(weekNumber, 10);
-    var week = weeksData.findByNumber(weekNumber);
-    res.render('week', {
-      week: week,
-      students: studentData.allStudents(),
-      helpers: {
-        attendanceForWeek: function(student, weekNumber){
-          var attendance = studentData.studentAttendanceForWeek(student, weekNumber);
-          if (attendance === 'Y') {
-            return 'Present';
-          } else {
-            return 'Absent';
+    weeksData.findByNumber(weekNumber, function(week){
+      studentData.allStudents(function(allStudents){
+        res.render('week', {
+          week: week,
+          students: allStudents,
+          helpers: {
+            attendanceForWeek: function(student, weekNumber){
+              var attendance = studentData.studentAttendanceForWeek(student, weekNumber);
+              if (attendance === 'Y') {
+                return 'Present';
+              } else {
+                return 'Absent';
+              }
+            },
+            formatDate: function(date){
+              return moment(date).format('MMMM Do YYYY');
+            }
           }
-        },
-        formatDate: function(date){
-          return moment(date).format('MMMM Do YYYY');
-        }
-      }
+        });
+      })
     });
   },
 
@@ -34,9 +39,10 @@ module.exports = {
     var weekNumber = req.params.weekNumber;
     weekNumber = parseInt(weekNumber, 10); // change from string to integer
 
-    var student = studentData.findById( req.session.user_id );
-    studentData.markAttendance(student, weekNumber);
-
-    res.redirect('/weeks/'+weekNumber);
+    var student = studentData.findById( req.session.user_id, function(student){
+      studentData.markAttendance(student, weekNumber, function(){
+        res.redirect('/weeks/'+weekNumber);
+      });
+    });
   }
 };
