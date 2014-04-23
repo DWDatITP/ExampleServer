@@ -8,12 +8,12 @@ module.exports = {
   post: function(req, res){
     var username = req.body.username;
 
-    var student = studentData.findByUsername(username);
+    studentData.findByUsername(username, function(student){
+      if (student) {
+        req.session.user_id = student.id;
+      }
 
-    if (student) {
-      req.session.user_id = student.id;
-    }
-
-    res.redirect('/');
+      res.redirect('/');
+    });
   }
 };

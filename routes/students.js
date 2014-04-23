@@ -2,8 +2,10 @@ var studentData = require('../data/students');
 
 module.exports = {
   get: function(req, res){
-    res.render('students', {
-      students: studentData.allStudents()
-    });
+  	studentData.allStudents(function(students){
+	    res.render('students', {
+	      students: students
+	    });
+  	});
   }
 };
