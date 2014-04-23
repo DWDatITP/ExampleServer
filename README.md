@@ -1,5 +1,5 @@
 Example Node Server
-=============
+============
 
 Setup:
   * Install nodemon:
