@@ -17,6 +17,6 @@
     "cookie-parser": "^1.0.1",
     "moment": "^2.6.0",
     "mongodb": "^1.4.2",
-    "connect-mongo": "git+https://github.com/kcbanner/connect-mongo.git"
+    "connect-mongo": "git+https://github.com/kcbanner/connect-mongo.git#master"
   }
 }
